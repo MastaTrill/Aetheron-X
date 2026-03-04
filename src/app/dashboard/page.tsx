@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/auth';
+import TasksManager from '@/components/TasksManager';
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -21,13 +22,7 @@ export default async function DashboardPage() {
           Signed in as <span className="font-medium">{session.email}</span>.
         </p>
 
-        <div className="rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">
-          <h2 className="text-base font-semibold">First Protected API</h2>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-            Query <code>/api/tasks</code> while authenticated to retrieve your
-            task feed.
-          </p>
-        </div>
+        <TasksManager />
 
         <form action="/api/auth/logout" method="post">
           <button
@@ -41,3 +36,4 @@ export default async function DashboardPage() {
     </main>
   );
 }
+
