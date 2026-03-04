@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 type Task = {
   id: number;
@@ -10,20 +10,20 @@ type Task = {
 
 export default function TasksManager() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState('');
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function fetchTasks() {
     try {
-      const response = await fetch("/api/tasks");
-      if (!response.ok) throw new Error("Failed to fetch tasks");
+      const response = await fetch('/api/tasks');
+      if (!response.ok) throw new Error('Failed to fetch tasks');
       const data = (await response.json()) as { items: Task[] };
       setTasks(data.items);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
@@ -40,56 +40,56 @@ export default function TasksManager() {
     setError(null);
 
     try {
-      const response = await fetch("/api/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: newTaskTitle, status: "pending" }),
+      const response = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTaskTitle, status: 'pending' }),
       });
 
-      if (!response.ok) throw new Error("Failed to create task");
+      if (!response.ok) throw new Error('Failed to create task');
 
       const task = (await response.json()) as Task;
       setTasks([...tasks, task]);
-      setNewTaskTitle("");
+      setNewTaskTitle('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setCreating(false);
     }
   }
 
   async function toggleStatus(task: Task) {
-    const newStatus = task.status === "pending" ? "completed" : "pending";
+    const newStatus = task.status === 'pending' ? 'completed' : 'pending';
 
     try {
       const response = await fetch(`/api/tasks/${task.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
 
-      if (!response.ok) throw new Error("Failed to update task");
+      if (!response.ok) throw new Error('Failed to update task');
 
       const updated = (await response.json()) as Task;
       setTasks(tasks.map((t) => (t.id === task.id ? updated : t)));
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   }
 
   async function deleteTask(taskId: number) {
     try {
       const response = await fetch(`/api/tasks/${taskId}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
-      if (!response.ok) throw new Error("Failed to delete task");
+      if (!response.ok) throw new Error('Failed to delete task');
 
       setTasks(tasks.filter((t) => t.id !== taskId));
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   }
 
@@ -111,9 +111,7 @@ export default function TasksManager() {
           Manage your tasks with full CRUD operations backed by SQLite.
         </p>
 
-        {error ? (
-          <p className="mt-4 text-sm text-red-600">{error}</p>
-        ) : null}
+        {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
 
         <div className="mt-6 flex gap-2">
           <input
@@ -121,7 +119,7 @@ export default function TasksManager() {
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") void createTask();
+              if (e.key === 'Enter') void createTask();
             }}
             placeholder="New task title..."
             className="flex-1 rounded-lg border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-zinc-500 dark:border-zinc-700"
@@ -131,7 +129,7 @@ export default function TasksManager() {
             disabled={creating || !newTaskTitle.trim()}
             className="rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-50"
           >
-            {creating ? "Adding..." : "Add"}
+            {creating ? 'Adding...' : 'Add'}
           </button>
         </div>
 
@@ -149,7 +147,7 @@ export default function TasksManager() {
                     onClick={() => void toggleStatus(task)}
                     className="flex h-5 w-5 items-center justify-center rounded border border-zinc-300 dark:border-zinc-600"
                   >
-                    {task.status === "completed" ? (
+                    {task.status === 'completed' ? (
                       <svg
                         className="h-3 w-3 text-foreground"
                         fill="currentColor"
@@ -161,9 +159,9 @@ export default function TasksManager() {
                   </button>
                   <span
                     className={
-                      task.status === "completed"
-                        ? "text-sm text-zinc-500 line-through"
-                        : "text-sm"
+                      task.status === 'completed'
+                        ? 'text-sm text-zinc-500 line-through'
+                        : 'text-sm'
                     }
                   >
                     {task.title}

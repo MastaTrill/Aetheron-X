@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/db';
 import {
   createSessionToken,
@@ -38,10 +39,12 @@ export async function POST(request: Request) {
       );
     }
 
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+
     const user = await prisma.user.create({
       data: {
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
         role: 'admin',
         tasks: {
           create: [

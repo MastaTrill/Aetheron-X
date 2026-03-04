@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-import { getConfiguredCredentials } from "./auth";
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import { getConfiguredCredentials } from './auth';
 
 let prismaInstance: PrismaClient | null = null;
 
@@ -25,22 +26,23 @@ export async function initializeDatabase() {
 
     if (!existingUser) {
       const credentials = getConfiguredCredentials();
+      const hashedPassword = await bcrypt.hash(credentials.password, 10);
       await prismaCli.user.create({
         data: {
           email: credentials.email,
-          password: credentials.password,
-          role: "admin",
+          password: hashedPassword,
+          role: 'admin',
           tasks: {
             create: [
-              { title: "Finalize dashboard route", status: "todo" },
-              { title: "Add data persistence", status: "done" },
-              { title: "Ship v0 API contract", status: "in-progress" },
+              { title: 'Finalize dashboard route', status: 'todo' },
+              { title: 'Add data persistence', status: 'done' },
+              { title: 'Ship v0 API contract', status: 'in-progress' },
             ],
           },
         },
       });
     }
   } catch (error) {
-    console.error("Failed to initialize database:", error);
+    console.error('Failed to initialize database:', error);
   }
 }

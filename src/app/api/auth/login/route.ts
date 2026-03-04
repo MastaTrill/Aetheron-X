@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcrypt';
 import {
   createSessionToken,
   getSessionCookieConfig,
@@ -25,7 +26,16 @@ export async function POST(request: Request) {
     where: { email: body.email },
   });
 
-  if (!user || user.password !== body.password) {
+  if (!user) {
+    return NextResponse.json(
+      { message: 'Invalid credentials.' },
+      { status: 401 },
+    );
+  }
+
+  const passwordMatch = await bcrypt.compare(body.password, user.password);
+
+  if (!passwordMatch) {
     return NextResponse.json(
       { message: 'Invalid credentials.' },
       { status: 401 },

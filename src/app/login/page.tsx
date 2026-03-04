@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@aetherx.local");
-  const [password, setPassword] = useState("aetherx-dev-password");
+  const [email, setEmail] = useState('admin@aetherx.local');
+  const [password, setPassword] = useState('aetherx-dev-password');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -15,10 +15,10 @@ export default function LoginPage() {
     setSubmitting(true);
     setError(null);
 
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
@@ -26,14 +26,14 @@ export default function LoginPage() {
     setSubmitting(false);
 
     if (!response.ok) {
-      const data = (await response.json().catch(() => null)) as
-        | { message?: string }
-        | null;
-      setError(data?.message ?? "Login failed.");
+      const data = (await response.json().catch(() => null)) as {
+        message?: string;
+      } | null;
+      setError(data?.message ?? 'Login failed.');
       return;
     }
 
-    router.push("/dashboard");
+    router.push('/dashboard');
     router.refresh();
   }
 
@@ -75,12 +75,12 @@ export default function LoginPage() {
             disabled={submitting}
             className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-70"
           >
-            {submitting ? "Signing in..." : "Sign in"}
+            {submitting ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
         <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <a
             href="/register"
             className="font-medium text-foreground underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300"
