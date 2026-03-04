@@ -1,0 +1,43 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { SESSION_COOKIE, verifySessionToken } from '@/lib/auth';
+
+export default async function DashboardPage() {
+  const cookieStore = await cookies();
+  const session = verifySessionToken(cookieStore.get(SESSION_COOKIE)?.value);
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <section className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-20">
+        <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
+          Dashboard
+        </p>
+        <h1 className="text-4xl font-semibold tracking-tight">Welcome back</h1>
+        <p className="text-zinc-600 dark:text-zinc-300">
+          Signed in as <span className="font-medium">{session.email}</span>.
+        </p>
+
+        <div className="rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">
+          <h2 className="text-base font-semibold">First Protected API</h2>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+            Query <code>/api/tasks</code> while authenticated to retrieve your
+            task feed.
+          </p>
+        </div>
+
+        <form action="/api/auth/logout" method="post">
+          <button
+            type="submit"
+            className="inline-flex w-fit items-center justify-center rounded-full border border-zinc-300 px-5 py-2 text-sm font-medium dark:border-zinc-700"
+          >
+            Sign out
+          </button>
+        </form>
+      </section>
+    </main>
+  );
+}
