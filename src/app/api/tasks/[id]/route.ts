@@ -40,13 +40,14 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({ message: 'Task not found' }, { status: 404 });
   }
 
-  const body = (await request.json()) as { title?: string; status?: string };
+  const body = (await request.json()) as { title?: string; status?: string; dueDate?: string };
 
   const task = await prisma.task.update({
     where: { id: taskId },
     data: {
       ...(body.title !== undefined && { title: body.title.trim() }),
       ...(body.status !== undefined && { status: body.status }),
+      ...(body.dueDate !== undefined && { dueDate: body.dueDate ? new Date(body.dueDate) : null }),
     },
   });
 

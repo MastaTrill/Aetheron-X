@@ -17,10 +17,11 @@ model User {
 }
 
 model Task {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   title     String
-  status    String  @default("todo")
+  status    String    @default("todo")
+  dueDate   DateTime?
   userId    Int
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
 }

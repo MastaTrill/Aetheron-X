@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'User not found' }, { status: 404 });
   }
 
-  const body = (await request.json()) as { title?: string; status?: string };
+  const body = (await request.json()) as { title?: string; status?: string; dueDate?: string };
 
   if (!body.title || body.title.trim() === '') {
     return NextResponse.json({ message: 'Title is required' }, { status: 400 });
@@ -56,6 +56,7 @@ export async function POST(request: Request) {
     data: {
       title: body.title.trim(),
       status: body.status === 'completed' ? 'completed' : 'pending',
+      dueDate: body.dueDate ? new Date(body.dueDate) : null,
       userId: user.id,
     },
   });
