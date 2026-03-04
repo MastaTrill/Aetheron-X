@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/auth';
-
-const tasks = [
-  { id: 1, title: 'Finalize dashboard route', status: 'todo' },
-  { id: 2, title: 'Add data persistence', status: 'todo' },
-  { id: 3, title: 'Ship v0 API contract', status: 'in-progress' },
-];
+import { initializeDatabase, prisma } from '@/lib/db';
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -16,8 +11,19 @@ export async function GET() {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
+  await initializeDatabase();
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.email },
+    include: { tasks: true },
+  });
+
+  if (!user) {
+    return NextResponse.json({ message: 'User not found' }, { status: 404 });
+  }
+
   return NextResponse.json({
-    items: tasks,
+    items: user.tasks,
     user: session.email,
   });
 }

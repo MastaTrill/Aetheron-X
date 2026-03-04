@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import {
   createSessionToken,
-  getConfiguredCredentials,
   getSessionCookieConfig,
   SESSION_COOKIE,
 } from '@/lib/auth';
+import { initializeDatabase, prisma } from '@/lib/db';
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
@@ -19,19 +19,20 @@ export async function POST(request: Request) {
     );
   }
 
-  const credentials = getConfiguredCredentials();
+  await initializeDatabase();
 
-  if (
-    body.email !== credentials.email ||
-    body.password !== credentials.password
-  ) {
+  const user = await prisma.user.findUnique({
+    where: { email: body.email },
+  });
+
+  if (!user || user.password !== body.password) {
     return NextResponse.json(
       { message: 'Invalid credentials.' },
       { status: 401 },
     );
   }
 
-  const token = createSessionToken(body.email);
+  const token = createSessionToken(user.email);
   const response = NextResponse.json({ ok: true });
   response.cookies.set(SESSION_COOKIE, token, getSessionCookieConfig());
 
