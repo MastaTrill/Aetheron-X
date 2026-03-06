@@ -9,8 +9,8 @@ export default function Home() {
           Build and launch AetherX faster with a clean, focused foundation.
         </h1>
         <p className="max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-300">
-          This is the first landing shell for the project. Use it as the base for
-          product messaging, onboarding, and feature rollout.
+          This is the first landing shell for the project. Use it as the base
+          for product messaging, onboarding, and feature rollout.
         </p>
 
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -85,7 +85,8 @@ export default function Home() {
             <article className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800 sm:col-span-2">
               <p className="font-medium">POST /api/automation/run</p>
               <p className="mt-1 text-zinc-600 dark:text-zinc-300">
-                {`{ "action": "seed-weekly-plan" }`} or {`{ "action": "clear-completed" }`} (admin role required)
+                {`{ "action": "seed-weekly-plan" }`} or{' '}
+                {`{ "action": "clear-completed" }`} (admin role required)
               </p>
             </article>
           </div>

@@ -30,7 +30,10 @@ export default function TasksManager() {
   const [searchQuery, setSearchQuery] = useState('');
   const { showToast } = useToast();
 
-  const getDueDateStatus = (dueDate: string | null, status: string): DueStatus => {
+  const getDueDateStatus = (
+    dueDate: string | null,
+    status: string,
+  ): DueStatus => {
     if (!dueDate || status === 'completed') return null;
 
     const today = new Date();
@@ -122,7 +125,9 @@ export default function TasksManager() {
 
       const updated = (await response.json()) as Task;
       setTasks((previous) =>
-        previous.map((existing) => (existing.id === task.id ? updated : existing)),
+        previous.map((existing) =>
+          existing.id === task.id ? updated : existing,
+        ),
       );
       showToast(`Task marked as ${newStatus}`, 'success');
     } catch (error) {
@@ -149,7 +154,9 @@ export default function TasksManager() {
 
       const updated = (await response.json()) as Task;
       setTasks((previous) =>
-        previous.map((existing) => (existing.id === taskId ? updated : existing)),
+        previous.map((existing) =>
+          existing.id === taskId ? updated : existing,
+        ),
       );
       setEditingId(null);
       showToast('Task updated', 'success');
@@ -238,7 +245,9 @@ export default function TasksManager() {
       <div className="rounded-2xl border border-zinc-200 p-8 dark:border-zinc-800">
         <div className="flex items-center gap-3">
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-300 border-t-foreground" />
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Loading tasks...</p>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            Loading tasks...
+          </p>
         </div>
       </div>
     );
@@ -254,13 +263,15 @@ export default function TasksManager() {
 
         {overdueTasks > 0 && (
           <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-900/20 dark:text-red-200">
-            You have {overdueTasks} overdue {overdueTasks === 1 ? 'task' : 'tasks'}.
+            You have {overdueTasks} overdue{' '}
+            {overdueTasks === 1 ? 'task' : 'tasks'}.
           </div>
         )}
 
         {todayTasks > 0 && overdueTasks === 0 && (
           <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-700 dark:border-blue-900 dark:bg-blue-900/20 dark:text-blue-200">
-            You have {todayTasks} {todayTasks === 1 ? 'task' : 'tasks'} due today.
+            You have {todayTasks} {todayTasks === 1 ? 'task' : 'tasks'} due
+            today.
           </div>
         )}
 
@@ -306,21 +317,27 @@ export default function TasksManager() {
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-1 rounded-lg border border-zinc-200 p-1 dark:border-zinc-700">
-            {(['all', 'pending', 'completed', 'overdue', 'upcoming'] as FilterType[]).map(
-              (value) => (
-                <button
-                  key={value}
-                  onClick={() => setFilter(value)}
-                  className={`rounded px-3 py-1 text-xs font-medium transition-colors ${
-                    filter === value
-                      ? 'bg-foreground text-background'
-                      : 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800'
-                  }`}
-                >
-                  {value.charAt(0).toUpperCase() + value.slice(1)}
-                </button>
-              ),
-            )}
+            {(
+              [
+                'all',
+                'pending',
+                'completed',
+                'overdue',
+                'upcoming',
+              ] as FilterType[]
+            ).map((value) => (
+              <button
+                key={value}
+                onClick={() => setFilter(value)}
+                className={`rounded px-3 py-1 text-xs font-medium transition-colors ${
+                  filter === value
+                    ? 'bg-foreground text-background'
+                    : 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800'
+                }`}
+              >
+                {value.charAt(0).toUpperCase() + value.slice(1)}
+              </button>
+            ))}
           </div>
 
           <select
@@ -368,7 +385,11 @@ export default function TasksManager() {
                     className="flex h-5 w-5 shrink-0 items-center justify-center rounded border border-zinc-300 dark:border-zinc-600"
                   >
                     {task.status === 'completed' ? (
-                      <svg className="h-3 w-3 text-foreground" fill="currentColor" viewBox="0 0 16 16">
+                      <svg
+                        className="h-3 w-3 text-foreground"
+                        fill="currentColor"
+                        viewBox="0 0 16 16"
+                      >
                         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
                       </svg>
                     ) : null}
@@ -381,7 +402,8 @@ export default function TasksManager() {
                         value={editTitle}
                         onChange={(event) => setEditTitle(event.target.value)}
                         onKeyDown={(event) => {
-                          if (event.key === 'Enter') void updateTaskTitle(task.id);
+                          if (event.key === 'Enter')
+                            void updateTaskTitle(task.id);
                           if (event.key === 'Escape') setEditingId(null);
                         }}
                         onBlur={() => void updateTaskTitle(task.id)}
@@ -396,7 +418,9 @@ export default function TasksManager() {
                           setEditTitle(task.title);
                         }}
                         className={`cursor-pointer text-sm ${
-                          task.status === 'completed' ? 'text-zinc-500 line-through' : ''
+                          task.status === 'completed'
+                            ? 'text-zinc-500 line-through'
+                            : ''
                         }`}
                       >
                         {task.title}
@@ -405,15 +429,23 @@ export default function TasksManager() {
 
                     {task.dueDate ? (
                       <div className="flex items-center gap-2 text-xs text-zinc-500">
-                        <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>
+                        <span>
+                          Due: {new Date(task.dueDate).toLocaleDateString()}
+                        </span>
                         {dueDateStatus === 'overdue' ? (
-                          <span className="font-medium text-red-600 dark:text-red-400">Overdue</span>
+                          <span className="font-medium text-red-600 dark:text-red-400">
+                            Overdue
+                          </span>
                         ) : null}
                         {dueDateStatus === 'today' ? (
-                          <span className="font-medium text-blue-600 dark:text-blue-400">Today</span>
+                          <span className="font-medium text-blue-600 dark:text-blue-400">
+                            Today
+                          </span>
                         ) : null}
                         {dueDateStatus === 'upcoming' ? (
-                          <span className="font-medium text-amber-600 dark:text-amber-400">Upcoming</span>
+                          <span className="font-medium text-amber-600 dark:text-amber-400">
+                            Upcoming
+                          </span>
                         ) : null}
                       </div>
                     ) : null}

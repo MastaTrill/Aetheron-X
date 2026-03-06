@@ -25,7 +25,9 @@ export async function GET() {
   const now = new Date();
 
   const total = user.tasks.length;
-  const completed = user.tasks.filter((task) => task.status === 'completed').length;
+  const completed = user.tasks.filter(
+    (task) => task.status === 'completed',
+  ).length;
   const pending = user.tasks.filter((task) => task.status === 'pending').length;
   const overdue = user.tasks.filter(
     (task) => task.status === 'pending' && task.dueDate && task.dueDate < now,
@@ -41,7 +43,8 @@ export async function GET() {
       pending,
       completed,
       overdue,
-      completionRate: total > 0 ? Number(((completed / total) * 100).toFixed(2)) : 0,
+      completionRate:
+        total > 0 ? Number(((completed / total) * 100).toFixed(2)) : 0,
     },
   });
 }

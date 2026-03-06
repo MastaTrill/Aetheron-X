@@ -44,9 +44,17 @@ export async function POST(request: Request) {
   }
 
   const rememberMe = body.rememberMe === true;
-  const token = createSessionToken(user.email, user.role === 'admin' ? 'admin' : 'member', rememberMe);
+  const token = createSessionToken(
+    user.email,
+    user.role === 'admin' ? 'admin' : 'member',
+    rememberMe,
+  );
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(SESSION_COOKIE, token, getSessionCookieConfig(rememberMe));
+  response.cookies.set(
+    SESSION_COOKIE,
+    token,
+    getSessionCookieConfig(rememberMe),
+  );
 
   return response;
 }

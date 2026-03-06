@@ -11,6 +11,7 @@
 ## Vercel Deployment Steps
 
 ### 1. Import Repository
+
 - [ ] Go to https://vercel.com/new
 - [ ] Sign in with GitHub
 - [ ] Select `MastaTrill/Aetheron-X` repository
@@ -33,6 +34,7 @@ DATABASE_URL=file:./prisma/dev.db
 - [ ] `DATABASE_URL` added
 
 ### 3. Deploy
+
 - [ ] Review build settings (should auto-detect Next.js)
 - [ ] Click "Deploy" button
 - [ ] Wait for build to complete (~2-3 minutes)
@@ -41,6 +43,7 @@ DATABASE_URL=file:./prisma/dev.db
 ## Post-Deployment Steps
 
 ### 4. Initialize Database
+
 - [ ] Install Vercel CLI: `npm i -g vercel`
 - [ ] Link project: `vercel link`
 - [ ] Pull environment: `vercel env pull`
@@ -49,12 +52,14 @@ DATABASE_URL=file:./prisma/dev.db
 Or use Vercel Dashboard → Your Project → Terminal
 
 ### 5. Create Admin Account
+
 - [ ] Visit your deployment URL
 - [ ] Navigate to `/register`
 - [ ] Register with admin credentials
 - [ ] Test login at `/login`
 
 ### 6. Verify Features
+
 - [ ] Home page loads
 - [ ] Authentication works (login/logout)
 - [ ] Dashboard accessible
@@ -70,6 +75,7 @@ Or use Vercel Dashboard → Your Project → Terminal
 ## Auto-Deploy Configuration
 
 ### 7. Verify Git Integration
+
 - [ ] Push a test commit to `main`
 - [ ] Verify auto-deployment triggers in Vercel
 - [ ] Check deployment succeeds
@@ -78,18 +84,21 @@ Or use Vercel Dashboard → Your Project → Terminal
 ## Production Checklist
 
 ### Security
+
 - [ ] Change `CONFIGURED_PASSWORD` from default
 - [ ] Verify `SESSION_SECRET` is unique and secure
 - [ ] Review user roles (admin vs member)
 - [ ] Test authentication flow end-to-end
 
 ### Performance
+
 - [ ] Check page load times
 - [ ] Verify API response times
 - [ ] Test with multiple concurrent users
 - [ ] Monitor Vercel Analytics
 
 ### Monitoring
+
 - [ ] Set up Vercel alerts
 - [ ] Check build logs for warnings
 - [ ] Monitor error logs in Dashboard
@@ -100,6 +109,7 @@ Or use Vercel Dashboard → Your Project → Terminal
 ### Common Issues
 
 **Build fails with Prisma error:**
+
 ```bash
 # In Vercel Dashboard Terminal
 npx prisma generate
@@ -107,16 +117,19 @@ npx prisma migrate deploy
 ```
 
 **Database not initializing:**
+
 - Verify `DATABASE_URL` is set correctly
 - Check that migrations ran successfully
 - Review build logs for Prisma errors
 
 **Authentication not working:**
+
 - Verify `SESSION_SECRET` is set
 - Check cookie settings in production
 - Ensure `CONFIGURED_PASSWORD` matches
 
 **Routes returning 404:**
+
 - Verify Next.js app directory structure
 - Check build output for route generation
 - Review Vercel deployment logs
@@ -131,6 +144,7 @@ npx prisma migrate deploy
 ## Rollback Procedure
 
 If deployment fails:
+
 1. Go to Vercel Dashboard → Deployments
 2. Find last working deployment
 3. Click "..." → "Promote to Production"
@@ -143,13 +157,15 @@ If deployment fails:
 
 Once all checkboxes are marked, your AetherX application is live and ready for users!
 
-**Your Live URL**: ___________________________________
+**Your Live URL**: ****************\_\_\_****************
 
 **Admin Credentials**:
-- Email: ___________________________________
+
+- Email: ****************\_\_\_****************
 - Password: (stored securely)
 
 **Next Steps**:
+
 - Share the URL with your team
 - Monitor the first few days closely
 - Gather user feedback

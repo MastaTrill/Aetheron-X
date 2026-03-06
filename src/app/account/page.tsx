@@ -14,7 +14,9 @@ export default async function AccountPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-6 py-20">
-        <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">Account</p>
+        <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
+          Account
+        </p>
         <h1 className="text-4xl font-semibold tracking-tight">Your Account</h1>
 
         <article className="rounded-2xl border border-zinc-200 p-5 dark:border-zinc-800">
@@ -30,19 +32,30 @@ export default async function AccountPage() {
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-zinc-500">Session Expires</dt>
-              <dd className="font-medium">{new Date(session.exp * 1000).toLocaleString()}</dd>
+              <dd className="font-medium">
+                {new Date(session.exp * 1000).toLocaleString()}
+              </dd>
             </div>
           </dl>
         </article>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/account/security" className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700">
+          <Link
+            href="/account/security"
+            className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700"
+          >
             Security
           </Link>
-          <Link href="/dashboard" className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700">
+          <Link
+            href="/dashboard"
+            className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700"
+          >
             Dashboard
           </Link>
-          <Link href="/docs" className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700">
+          <Link
+            href="/docs"
+            className="rounded-full border border-zinc-300 px-5 py-2 text-sm dark:border-zinc-700"
+          >
             Docs
           </Link>
         </div>

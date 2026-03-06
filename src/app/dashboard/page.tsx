@@ -20,7 +20,8 @@ export default async function DashboardPage() {
         </p>
         <h1 className="text-4xl font-semibold tracking-tight">Welcome back</h1>
         <p className="text-zinc-600 dark:text-zinc-300">
-          Signed in as <span className="font-medium">{session.email}</span> ({session.role}).
+          Signed in as <span className="font-medium">{session.email}</span> (
+          {session.role}).
         </p>
 
         <div className="flex flex-wrap gap-3">

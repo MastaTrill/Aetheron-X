@@ -31,7 +31,9 @@ function normalizeDatabaseUrl(value: string) {
   }
 
   const relativePath = value.slice('file:./'.length);
-  const absolutePath = path.resolve(process.cwd(), relativePath).replace(/\\/g, '/');
+  const absolutePath = path
+    .resolve(process.cwd(), relativePath)
+    .replace(/\\/g, '/');
   return `file:${absolutePath}`;
 }
 

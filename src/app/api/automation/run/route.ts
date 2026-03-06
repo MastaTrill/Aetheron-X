@@ -37,19 +37,32 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'User not found' }, { status: 404 });
   }
 
-  const body = (await request.json().catch(() => null)) as AutomationBody | null;
+  const body = (await request
+    .json()
+    .catch(() => null)) as AutomationBody | null;
   const action = body?.action;
 
   if (!action) {
-    return NextResponse.json({ message: 'Action is required.' }, { status: 400 });
+    return NextResponse.json(
+      { message: 'Action is required.' },
+      { status: 400 },
+    );
   }
 
   if (action === 'seed-weekly-plan') {
     const created = await prisma.task.createMany({
       data: [
         { title: 'Weekly planning review', status: 'pending', userId: user.id },
-        { title: 'Prioritize top 3 outcomes', status: 'pending', userId: user.id },
-        { title: 'Schedule deep work blocks', status: 'pending', userId: user.id },
+        {
+          title: 'Prioritize top 3 outcomes',
+          status: 'pending',
+          userId: user.id,
+        },
+        {
+          title: 'Schedule deep work blocks',
+          status: 'pending',
+          userId: user.id,
+        },
       ],
     });
 

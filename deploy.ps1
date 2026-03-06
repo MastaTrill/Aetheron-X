@@ -19,7 +19,8 @@ Write-Host "📦 Checking Node.js installation..." -ForegroundColor Yellow
 try {
     $nodeVersion = node --version
     Write-Host "✓ Node.js $nodeVersion found" -ForegroundColor Green
-} catch {
+}
+catch {
     Write-Host "❌ Node.js not found. Please install Node.js first." -ForegroundColor Red
     exit 1
 }
@@ -33,7 +34,8 @@ if (-not $vercelInstalled) {
     Write-Host "⚠️  Vercel CLI not found. Installing globally..." -ForegroundColor Yellow
     npm install -g vercel
     Write-Host "✓ Vercel CLI installed" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "✓ Vercel CLI already installed" -ForegroundColor Green
 }
 
@@ -44,10 +46,12 @@ try {
     $testResult = npm test -- --run 2>&1
     if ($LASTEXITCODE -eq 0) {
         Write-Host "✓ All tests passed" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "⚠️  Some tests failed, but continuing..." -ForegroundColor Yellow
     }
-} catch {
+}
+catch {
     Write-Host "⚠️  Could not run tests, continuing..." -ForegroundColor Yellow
 }
 
@@ -56,7 +60,7 @@ Write-Host ""
 Write-Host "🔐 Generating environment variables..." -ForegroundColor Yellow
 
 # Generate secure session secret
-$sessionSecret = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 32 | ForEach-Object {[char]$_})
+$sessionSecret = -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 32 | ForEach-Object { [char]$_ })
 Write-Host "✓ Generated SESSION_SECRET" -ForegroundColor Green
 
 # Prompt for admin password
@@ -138,10 +142,12 @@ try {
         Write-Host "📊 Monitor your deployment:" -ForegroundColor Cyan
         Write-Host "  Dashboard: https://vercel.com/dashboard" -ForegroundColor Gray
         Write-Host ""
-    } else {
+    }
+    else {
         throw "Deployment failed with exit code $LASTEXITCODE"
     }
-} catch {
+}
+catch {
     Write-Host ""
     Write-Host "❌ Deployment failed: $_" -ForegroundColor Red
     Write-Host ""
@@ -164,7 +170,8 @@ if ($initDb -eq "y") {
         vercel env pull
         npx prisma migrate deploy
         Write-Host "✓ Database initialized" -ForegroundColor Green
-    } catch {
+    }
+    catch {
         Write-Host "⚠️  Could not initialize database automatically." -ForegroundColor Yellow
         Write-Host "   Run these commands manually:" -ForegroundColor Yellow
         Write-Host "     vercel env pull" -ForegroundColor Gray
