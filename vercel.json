@@ -6,6 +6,7 @@
   "framework": "nextjs",
   "env": {
     "SESSION_SECRET": "@session_secret",
-    "CONFIGURED_PASSWORD": "@configured_password"
+    "CONFIGURED_PASSWORD": "@configured_password",
+    "DATABASE_URL": "@database_url"
   }
 }
