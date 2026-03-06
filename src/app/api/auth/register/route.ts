@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       data: {
         email: body.email,
         password: hashedPassword,
-        role: 'admin',
+        role: 'member',
         tasks: {
           create: [
             { title: 'Welcome to Aetheron-X!', status: 'todo' },
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       },
     });
 
-    const token = createSessionToken(user.email);
+    const token = createSessionToken(user.email, 'member');
     const response = NextResponse.json({ ok: true });
     response.cookies.set(SESSION_COOKIE, token, getSessionCookieConfig());
 

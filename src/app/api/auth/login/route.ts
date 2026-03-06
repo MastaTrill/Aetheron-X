@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as {
     email?: string;
     password?: string;
+    rememberMe?: boolean;
   } | null;
 
   if (!body?.email || !body?.password) {
@@ -42,9 +43,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const token = createSessionToken(user.email);
+  const rememberMe = body.rememberMe === true;
+  const token = createSessionToken(user.email, user.role === 'admin' ? 'admin' : 'member', rememberMe);
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(SESSION_COOKIE, token, getSessionCookieConfig());
+  response.cookies.set(SESSION_COOKIE, token, getSessionCookieConfig(rememberMe));
 
   return response;
 }

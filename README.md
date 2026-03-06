@@ -33,25 +33,30 @@ Full-stack task management application built with Next.js, TypeScript, Tailwind 
 ## Quick Start
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Setup environment**:
+
    ```bash
    copy .env.example .env.local
    ```
+
    Edit `.env.local` and set your secrets:
    - `SESSION_SECRET` - Random string for session signing
    - `CONFIGURED_PASSWORD` - Default admin password
 
 3. **Initialize database**:
+
    ```bash
    npx prisma migrate dev
    npx prisma generate
    ```
 
 4. **Start development server**:
+
    ```bash
    npm run dev
    ```
@@ -77,7 +82,8 @@ Full-stack task management application built with Next.js, TypeScript, Tailwind 
 ### Environment Variables
 
 Required for production:
-```
+
+```env
 SESSION_SECRET=your-random-secret-key
 CONFIGURED_PASSWORD=your-admin-password
 DATABASE_URL=file:./prisma/
@@ -85,7 +91,7 @@ DATABASE_URL=file:./prisma/
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/
 │   ├── api/
@@ -111,11 +117,13 @@ prisma/
 ## API Routes
 
 ### Authentication
+
 - `POST /api/auth/login` - Login with email/password
 - `POST /api/auth/logout` - Clear session
 - `POST /api/auth/register` - Create new user account
 
 ### Tasks
+
 - `GET /api/tasks` - Get all tasks for authenticated user
 - `POST /api/tasks` - Create new task
 - `PUT /api/tasks/[id]` - Update task (title, status, dueDate)
@@ -126,16 +134,19 @@ prisma/
 ### Database Management
 
 View database in GUI:
+
 ```bash
 npx prisma studio
 ```
 
 Create new migration:
+
 ```bash
 npx prisma migrate dev --name migration_name
 ```
 
 Reset database:
+
 ```bash
 npx prisma migrate reset
 ```
@@ -143,11 +154,13 @@ npx prisma migrate reset
 ### Code Quality
 
 Run linter:
+
 ```bash
 npm run lint
 ```
 
 Check types:
+
 ```bash
 npx tsc --noEmit
 ```
@@ -155,7 +168,6 @@ npx tsc --noEmit
 ## License
 
 MIT
-
 
 - Auth scaffold: `GET /login`, `POST /api/auth/login`, `POST /api/auth/logout`
 - Protected page: `GET /dashboard`

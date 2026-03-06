@@ -15,18 +15,28 @@ export default function Home() {
 
         <div className="flex flex-col gap-3 sm:flex-row">
           <a
-            href="#next-steps"
+            href="/login"
             className="inline-flex items-center justify-center rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background"
           >
-            Start Building
+            Sign In
           </a>
           <a
-            href="https://github.com/MastaTrill/Aetheron-X"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/dashboard"
             className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-foreground dark:border-zinc-700"
           >
-            View Repository
+            Open Dashboard
+          </a>
+          <a
+            href="/docs"
+            className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-foreground dark:border-zinc-700"
+          >
+            View Docs
+          </a>
+          <a
+            href="/account"
+            className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-foreground dark:border-zinc-700"
+          >
+            Account
           </a>
         </div>
 
@@ -49,6 +59,36 @@ export default function Home() {
               Add backend routes for data and automation tasks.
             </p>
           </article>
+        </section>
+
+        <section className="rounded-2xl border border-zinc-200 p-6 dark:border-zinc-800">
+          <h2 className="text-lg font-semibold">API Quick Reference</h2>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+            Core endpoints available for auth, data, and automation.
+          </p>
+
+          <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+            <article className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+              <p className="font-medium">POST /api/auth/login</p>
+              <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                {`{ "email": "admin@aetherx.local", "password": "...", "rememberMe": true }`}
+              </p>
+            </article>
+
+            <article className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">
+              <p className="font-medium">GET /api/data</p>
+              <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                Returns task summary metrics for the signed-in user.
+              </p>
+            </article>
+
+            <article className="rounded-xl border border-zinc-200 p-4 dark:border-zinc-800 sm:col-span-2">
+              <p className="font-medium">POST /api/automation/run</p>
+              <p className="mt-1 text-zinc-600 dark:text-zinc-300">
+                {`{ "action": "seed-weekly-plan" }`} or {`{ "action": "clear-completed" }`} (admin role required)
+              </p>
+            </article>
+          </div>
         </section>
       </section>
     </main>

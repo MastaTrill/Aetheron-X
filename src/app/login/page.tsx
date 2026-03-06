@@ -2,11 +2,13 @@
 
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('admin@aetherx.local');
   const [password, setPassword] = useState('aetherx-dev-password');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -20,7 +22,7 @@ export default function LoginPage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, rememberMe }),
     });
 
     setSubmitting(false);
@@ -68,6 +70,16 @@ export default function LoginPage() {
             />
           </label>
 
+          <label className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(event) => setRememberMe(event.target.checked)}
+              className="h-4 w-4 rounded border-zinc-300 dark:border-zinc-700"
+            />
+            Keep me signed in for 7 days
+          </label>
+
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
           <button
@@ -80,13 +92,23 @@ export default function LoginPage() {
         </form>
 
         <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
-          Don't have an account?{' '}
-          <a
+          Don&apos;t have an account?{' '}
+          <Link
             href="/register"
             className="font-medium text-foreground underline underline-offset-4 hover:text-zinc-700 dark:hover:text-zinc-300"
           >
             Sign up
-          </a>
+          </Link>
+        </p>
+
+        <p className="text-center text-xs text-zinc-500 dark:text-zinc-400">
+          <Link href="/docs" className="underline underline-offset-4">
+            Docs
+          </Link>{' '}
+          ·{' '}
+          <Link href="/account" className="underline underline-offset-4">
+            Account
+          </Link>
         </p>
       </section>
     </main>

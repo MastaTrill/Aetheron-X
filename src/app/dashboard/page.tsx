@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SESSION_COOKIE, verifySessionToken } from '@/lib/auth';
-import TasksManager from '@/components/TasksManager';
+import TasksManager from '../../components/TasksManager';
+import Link from 'next/link';
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -19,8 +20,23 @@ export default async function DashboardPage() {
         </p>
         <h1 className="text-4xl font-semibold tracking-tight">Welcome back</h1>
         <p className="text-zinc-600 dark:text-zinc-300">
-          Signed in as <span className="font-medium">{session.email}</span>.
+          Signed in as <span className="font-medium">{session.email}</span> ({session.role}).
         </p>
+
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/docs"
+            className="inline-flex w-fit items-center justify-center rounded-full border border-zinc-300 px-5 py-2 text-sm font-medium dark:border-zinc-700"
+          >
+            Docs
+          </Link>
+          <Link
+            href="/account"
+            className="inline-flex w-fit items-center justify-center rounded-full border border-zinc-300 px-5 py-2 text-sm font-medium dark:border-zinc-700"
+          >
+            Account
+          </Link>
+        </div>
 
         <TasksManager />
 
