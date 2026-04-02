@@ -22,15 +22,15 @@
 Add these three variables in the deployment configuration:
 
 ```env
-SESSION_SECRET=1a8OXjD59JKc2kHg6qCVdZl3zQ0nsE7o
-CONFIGURED_PASSWORD=aetherx-prod-password
+AETHERX_SESSION_SECRET=1a8OXjD59JKc2kHg6qCVdZl3zQ0nsE7o
+AETHERX_ADMIN_PASSWORD=aetherx-prod-password
 DATABASE_URL=file:./prisma/dev.db
 ```
 
-**Important**: Change `CONFIGURED_PASSWORD` to your own secure password!
+**Important**: Change `AETHERX_ADMIN_PASSWORD` to your own secure password!
 
-- [ ] `SESSION_SECRET` added
-- [ ] `CONFIGURED_PASSWORD` added (and customized)
+- [ ] `AETHERX_SESSION_SECRET` added
+- [ ] `AETHERX_ADMIN_PASSWORD` added (and customized)
 - [ ] `DATABASE_URL` added
 
 ### 3. Deploy
@@ -124,9 +124,9 @@ npx prisma migrate deploy
 
 **Authentication not working:**
 
-- Verify `SESSION_SECRET` is set
+- Verify `AETHERX_SESSION_SECRET` is set
 - Check cookie settings in production
-- Ensure `CONFIGURED_PASSWORD` matches
+- Ensure `AETHERX_ADMIN_PASSWORD` matches
 
 **Routes returning 404:**
 

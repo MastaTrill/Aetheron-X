@@ -3,10 +3,5 @@
   "outputDirectory": ".next",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "env": {
-    "SESSION_SECRET": "@session_secret",
-    "CONFIGURED_PASSWORD": "@configured_password",
-    "DATABASE_URL": "@database_url"
-  }
+  "framework": "nextjs"
 }
